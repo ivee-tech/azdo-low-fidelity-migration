@@ -1,0 +1,62 @@
+{
+  "Version": "8.9",
+  "TelemetryEnableTrace": false,
+  "workaroundForQuerySOAPBugEnabled": false,
+  "Source": {
+    "Collection": "https://<source server>/tfs/<source collection>",
+    "Project": "<source project>",
+    "ReflectedWorkItemIDFieldName": "Title",
+    "AllowCrossProjectLinking": false,
+    "PersonalAccessToken": ""
+  },
+  "Target": {
+    "Collection": "https://dev.azure.com/<target org>",
+    "Project": "<target project>",
+    "ReflectedWorkItemIDFieldName": "Custom.ReflectedWorkItemID",
+    "AllowCrossProjectLinking": false,
+    "PersonalAccessToken": "***"
+  },
+  "FieldMaps": [
+  ],
+  "WorkItemTypeDefinition": {
+  },
+  "GitRepoMapping": null,
+  "Processors": [
+    {
+      "ObjectType": "VstsSyncMigrator.Engine.Configuration.Processing.NodeStructuresMigrationConfig",
+      "PrefixProjectToNodes": false,
+      "Enabled": true,
+      "BasePaths": [
+      ]
+    },
+    {
+      "ObjectType": "VstsSyncMigrator.Engine.Configuration.Processing.TeamMigrationConfig",
+      "PrefixProjectToNodes": false,
+      "Enabled": true,
+      "EnableTeamSettingsMigration": false
+    },
+    {
+      "ObjectType": "VstsSyncMigrator.Engine.Configuration.Processing.WorkItemMigrationConfig",
+      "ReplayRevisions": true,
+      "PrefixProjectToNodes": false,
+      "UpdateCreatedDate": true,
+      "UpdateCreatedBy": true,
+      "UpdateSourceReflectedId": false,
+      "BuildFieldTable": true,
+      "AppendMigrationToolSignatureFooter": false,
+      "QueryBit": "AND [System.WorkItemType] IN ('User Story', 'Task', 'Bug') AND [System.AreaPath] UNDER '<source project>\\<are path>'",
+      "OrderBit": "[System.ChangedDate] desc",
+      "Enabled": false,
+      "LinkMigration": true,
+      "AttachmentMigration": true,
+      "AttachmentWorkingPath": "c:\\temp\\WorkItemAttachmentWorkingFolder\\",
+      "FixHtmlAttachmentLinks": false,
+      "SkipToFinalRevisedWorkItemType": true,
+      "WorkItemCreateRetryLimit": 5,
+      "FilterWorkItemsThatAlreadyExistInTarget": true,
+      "PauseAfterEachWorkItem": false,
+      "AttachmentMazSize": 480000000,
+      "CollapseRevisions": false
+    }
+  ]
+}

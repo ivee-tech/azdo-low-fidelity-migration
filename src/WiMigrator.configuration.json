@@ -1,0 +1,55 @@
+{
+  "source-connection": {
+    "account": "https://<source project>/tfs/<source collection>",
+    "project": "<source project>",
+    "access-token": "",
+    "use-integrated-auth": "true"
+  },
+  "target-connection": {
+    "account": "https://dev.azure.com/<target org>",
+    "project": "<target project>",
+    "access-token": "***",
+    "use-integrated-auth": "false"
+  },
+  "query": "<source query path + name>",
+  "heartbeat-frequency-in-seconds": 30,
+  "query-page-size": 20000,
+  "parallelism": 1,
+  "max-attachment-size": 62914560,
+  "link-parallelism": 1,
+  "attachment-upload-chunk-size": 1048576,
+  "skip-existing": false,
+  "move-history": true,
+  "move-history-limit": 200,
+  "move-git-links": false,
+  "move-attachments": true,
+  "move-links": true,
+  "source-post-move-tag": "",
+  "target-post-move-tag": "<target tag to indicate current batch>",
+  "skip-work-items-with-type-missing-fields": false,
+  "skip-work-items-with-missing-area-path": false,
+  "skip-work-items-with-missing-iteration-path": false,
+  "default-area-path": "<source project>",
+  "default-iteration-path": "<target project>",
+  "clear-identity-display-names": false,
+  "ensure-identities": false,
+  "include-web-link": true,
+  "log-level-for-file": "information",
+  "field-replacements": {
+    "System.Id": { "field-reference-name": "Custom.ReflectedWorkItemID" },
+    "<Org>.<Namespace>.<Field>": { "field-reference-name": "Custom.<Field>" },
+  },
+  "send-email-notification": false,
+  "email-notification": {
+    "smtp-server": "127.0.0.1",
+    "use-ssl": false,
+    "port": "25",
+    "from-address": "wimigrator@example.com",
+    "user-name": "un",
+    "password": "pw",
+    "recipient-addresses": [
+      "test1@test.com",
+      "test2@test.com"
+    ]
+  }
+}
