@@ -1,3 +1,4 @@
+. .\AzureDevOpsContext.ps1
 . .\Add-AzureDevOpsUserProjectEntitlement.ps1
 
 Function Add-AzureDevOpsUsersProjectEntitlement {
@@ -8,10 +9,10 @@ Function Add-AzureDevOpsUsersProjectEntitlement {
       [ValidateSet("advanced", "earlyAdopter", "express", "none", "professional", "stakeholder")]
       [Parameter(Mandatory = $true)][string]$accountLicenseType, 
       [string]$projectId = $null,
-      [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+      [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
     )
 
-$data = Import-Csv -Path $usersCsvPath # Header: ID, Each line: NATION\USER
+$data = Import-Csv -Path $usersCsvPath # Header: ID, Each line: <DOMAIN>\<USER>
 
 $data | ForEach-Object {
     $userName = ($_.ID -split "\\")[1]

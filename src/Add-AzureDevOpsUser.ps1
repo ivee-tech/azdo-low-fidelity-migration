@@ -1,9 +1,11 @@
+. .\AzureDevOpsContext.ps1
+
 Function Add-AzureDevOpsUser {
     [CmdletBinding()]
     param(
       [ValidateNotNullOrEmpty()]
       [Parameter(Mandatory = $true)][string]$upn,
-      [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+      [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
     )
 
 # coreServer should be vssps.dev.azure.com

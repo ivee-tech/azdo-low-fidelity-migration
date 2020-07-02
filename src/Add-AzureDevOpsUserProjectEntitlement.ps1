@@ -1,3 +1,5 @@
+. .\AzureDevOpsContext.ps1
+
 Function Add-AzureDevOpsUserProjectEntitlement {
     [CmdletBinding()]
     param(
@@ -6,7 +8,7 @@ Function Add-AzureDevOpsUserProjectEntitlement {
       [ValidateSet("advanced", "earlyAdopter", "express", "none", "professional", "stakeholder")]
       [Parameter(Mandatory = $true)][string]$accountLicenseType, 
       [string]$projectId = $null,
-      [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+      [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
     )
   
 # coreServer should be vsaex.dev.azure.com

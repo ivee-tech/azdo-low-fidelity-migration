@@ -1,3 +1,5 @@
+. .\AzureDevOpsContext.ps1
+
 Function Get-AzureDevOpsContext {
     [CmdletBinding()]
     param(
@@ -13,17 +15,18 @@ Function Get-AzureDevOpsContext {
     
   
     $orgBaseUrl = $protocol + '://' + $coreServer + '/' + $org + '/_apis'
+    $orgUrl = $protocol + '://' + $coreServer + '/' + $org 
     $projectBaseUrl = $protocol + '://' + $coreServer + '/' + $org + '/' + $project + '/_apis'
-    $orgUrl = $protocol + '://' + $coreServer + '/' + $org
     $projectUrl = $protocol + '://' + $coreServer + '/' + $org + '/' + $project
     
     $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($org):$pat"))
   
-    [hashtable]$r = @{ } 
-    
+    # $r = [AzureDevOpsContext]::new()
+    $r = New-Object AzureDevOpsContext
+
     $r.orgBaseUrl = $orgBaseUrl
-    $r.projectBaseUrl = $projectBaseUrl
     $r.orgUrl = $orgUrl
+    $r.projectBaseUrl = $projectBaseUrl
     $r.projectUrl = $projectUrl
     $r.base64AuthInfo = $base64AuthInfo
     $r.protocol = $protocol
@@ -32,6 +35,7 @@ Function Get-AzureDevOpsContext {
     $r.project = $project
     $r.apiVersion = $apiVersion
     $r.isOnline = $isOnline
+    $r.pat = $pat
   
     return $r
   }

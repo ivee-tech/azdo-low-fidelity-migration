@@ -52,7 +52,7 @@ $projectId = '<project guid>'
 $accessLevel = 'stakeholder' # basic, stakeholder, subscriber
 $destCtx | Add-AzureDevOpsUserProjectEntitlement -upn $upn -accountLicenseType $accessLevel -projectId $projectId
  
-$destCtx | Add-AzureDevOpsUsersProjectEntitlement -usersCsvPath .\Users1.csv -accountLicenseType $accessLevel -projectId $projectId
+$destCtx | Add-AzureDevOpsUsersProjectEntitlement -usersCsvPath .\Users.csv -accountLicenseType $accessLevel -projectId $projectId
 ```
 
 ## Process Templates

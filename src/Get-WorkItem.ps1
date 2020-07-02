@@ -1,3 +1,5 @@
+. .\AzureDevOpsContext.ps1
+
 Function Get-WorkItem {
     [CmdletBinding()]
     param(
@@ -6,7 +8,7 @@ Function Get-WorkItem {
       [Parameter()][string]$fields,
       # [ValidateSet("None", "Relations", "Fields", "Links", "All")] - combinations are possible, use comma-separated values
       [Parameter()][string]$expand,
-      [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+      [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
     )
 # GET https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/{id}?fields={fields}&asOf={asOf}&$expand={$expand}&api-version=5.1  
     $v = $context.apiVersion

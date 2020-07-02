@@ -1,9 +1,11 @@
-﻿Function Copy-Comments {
+﻿. .\AzureDevOpsContext.ps1
+
+Function Copy-Comments {
     [CmdletBinding()]
     param(
         [ValidateNotNullOrEmpty()]
-        [Parameter(Mandatory=$true)][hashtable]$srcCtx,
-        [Parameter(Mandatory=$true)][hashtable]$destCtx,
+        [Parameter(Mandatory=$true)][AzureDevOpsContext]$srcCtx,
+        [Parameter(Mandatory=$true)][AzureDevOpsContext]$destCtx,
         [Parameter(Mandatory=$true)][string]$csvFilePath #format: oldId, newId
     )
 

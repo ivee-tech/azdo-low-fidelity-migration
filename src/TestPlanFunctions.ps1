@@ -1,11 +1,12 @@
-﻿# . .\Get-AzureDevOpsContext.ps1
+﻿. .\AzureDevOpsContext.ps1
+. .\Get-AzureDevOpsContext.ps1
 
 Function Get-TestPlan {
   [CmdletBinding()]
   param(
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)][int]$planId,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $v = $context.apiVersion + '-preview.1'
@@ -32,7 +33,7 @@ Function Add-TestPlan {
     [Parameter(Mandatory = $true)][string]$startDate,
     [Parameter(Mandatory = $true)][string]$endDate,
     [Parameter(Mandatory = $true)][string]$state,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $contentType = 'application/json'
@@ -71,7 +72,7 @@ Function Get-TestConfigurations {
   [CmdletBinding()]
   param(
     [ValidateNotNullOrEmpty()]
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $v = $context.apiVersion + '-preview.1'
@@ -98,7 +99,7 @@ Function Add-TestConfiguration {
     [Parameter(Mandatory = $true)][string]$state,
     [Parameter()][switch]$isDefault,
     [Parameter()][array]$values,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $contentType = 'application/json'
@@ -138,8 +139,8 @@ Function Copy-TestConfigurations {
   [CmdletBinding()]
   param(
     [ValidateNotNullOrEmpty()]
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$srcCtx,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$destCtx
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$srcCtx,
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$destCtx
     )
 
     $srcCfgs = $srcCtx | Get-TestConfigurations
@@ -170,7 +171,7 @@ Function Get-TestPlanSuites {
   param(
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)][int]$planId,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
   $v = $context.apiVersion + '-preview.1'
   $testPlanSuitesUrl = $context.projectBaseUrl + '/testplan/plans/' + $planId + '/suites?expand=Children,DefaultTesters&api-version=' + $v
@@ -192,7 +193,7 @@ Function Get-TestPlanSuite {
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)][int]$planId,
     [Parameter(Mandatory = $true)][int]$suiteId,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $v = $context.apiVersion + '-preview.1'
@@ -221,7 +222,7 @@ Function Add-TestPlanSuite {
     $suiteType,
     [Parameter()][string]$requirementId,
     [Parameter()][string]$queryString,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $contentType = 'application/json'
@@ -271,8 +272,8 @@ Function Invoke-QueryWorkItemFromDestBySrc {
   param(
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)][string]$srcId,
-    [Parameter(Mandatory = $true)][hashtable]$srcCtx,
-    [Parameter(Mandatory = $true)][hashtable]$destCtx
+    [Parameter(Mandatory = $true)][AzureDevOpsContext]$srcCtx,
+    [Parameter(Mandatory = $true)][AzureDevOpsContext]$destCtx
   )
 
   $contentType = 'application/json'
@@ -316,7 +317,7 @@ Function Get-SuiteTestCases {
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)][int]$planId,
     [Parameter(Mandatory = $true)][int]$suiteId,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $v = $context.apiVersion + '-preview.2'
@@ -341,7 +342,7 @@ Function Get-SuiteTestCase {
     [Parameter(Mandatory = $true)][int]$planId,
     [Parameter(Mandatory = $true)][int]$suiteId,
     [Parameter(Mandatory = $true)][int]$testCaseId, # this is the actual Work Item ID
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $v = $context.apiVersion + '-preview.2'
@@ -366,7 +367,7 @@ Function Add-SuiteTestCase {
     [Parameter(Mandatory = $true)][int]$suiteId,
     [Parameter(Mandatory = $true)][int]$workItemId,
     [Parameter(Mandatory = $true)][int]$configurationId,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $contentType = 'application/json'
@@ -407,7 +408,7 @@ Function Add-SuiteTestCaseMultiPoint {
     [Parameter(Mandatory = $true)][int]$suiteId,
     [Parameter(Mandatory = $true)][int]$workItemId,
     [Parameter(Mandatory = $true)][int[]]$configurationIds,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $contentType = 'application/json'
@@ -438,7 +439,7 @@ Function Remove-TestCase {
   param(
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)][int]$testCaseId,
-    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][hashtable]$context
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)][AzureDevOpsContext]$context
   )
 
   $v = $context.apiVersion + '-preview.1'
@@ -517,7 +518,7 @@ srcSuite: $srcSuite, destPlanId: $destPlanId, destParentSuiteId: $destParentSuit
 
 Function Show-SuiteTestCases
 {
-  param($planId, $suiteId, $suite, $srcCfgs, $destCfgs, [hashtable]$ctx)
+  param($planId, $suiteId, $suite, $srcCfgs, $destCfgs, [AzureDevOpsContext]$ctx)
 
   if($suite.suiteType -eq 'dynamicTestSuite') {
       Write-Host $suite
@@ -540,7 +541,7 @@ Function Show-SuiteTestCases
   #> 
 }
 
-Function Invoke-TestPlanSuiteCallback([int]$planId, [int]$suiteId, [hashtable]$ctx, [scriptblock]$callback)
+Function Invoke-TestPlanSuiteCallback([int]$planId, [int]$suiteId, [AzureDevOpsContext]$ctx, [scriptblock]$callback)
 {
   $suite = Get-TestPlanSuite -planId $planId -suiteId $suiteId -context $ctx
   if($null -ne $callback) {
@@ -554,8 +555,8 @@ Function Invoke-TestPlanSuiteCallback([int]$planId, [int]$suiteId, [hashtable]$c
   }
 }
 
-Function Invoke-CopyTestPlanSuiteCallback([int]$srcPlanId, [int]$srcSuiteId, [hashtable]$srcCtx, `
-  [int]$destPlanId, [int]$destParentSuiteId, [string]$destParentSuiteName, [hashtable]$destCtx, `
+Function Invoke-CopyTestPlanSuiteCallback([int]$srcPlanId, [int]$srcSuiteId, [AzureDevOpsContext]$srcCtx, `
+  [int]$destPlanId, [int]$destParentSuiteId, [string]$destParentSuiteName, [AzureDevOpsContext]$destCtx, `
   [switch]$isRoot, $srcCfgs, $destCfgs, [scriptblock]$callback)
 {
 
